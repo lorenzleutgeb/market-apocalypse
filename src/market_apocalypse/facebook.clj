@@ -7,6 +7,7 @@
 
 (def PAGE_ACCESS_TOKEN (env :page-access-token))
 (def VERIFY_TOKEN (env :verify-token))
+(def MAX_LENGTH 640)
 
 (defn validate-webhook [request]
   (let [params (:params request)]
@@ -59,6 +60,9 @@
   {:text message-text})
 
 (defn send-long-message [recipient-id message]
-  (apply (fn [part] send-api {:recipient {:id recipient-id}
-                              :message (text-message (str part))})
-         (partition 640 message)))
+  (map (fn [part] send-api {:recipient {:id recipient-id}
+                            :message (text-message (str part))})
+       (if
+          (< (count message) MAX_LENGTH)
+          [message]
+          (partition MAX_LENGTH MAX_LENGTH nil message))))
