@@ -57,3 +57,8 @@
 
 (defn text-message [message-text]
   {:text message-text})
+
+(defn send-long-message [recipient-id message]
+  (apply (fn [part] send-api {:recipient {:id recipient-id}
+                              :message (text-message part)})
+         (partition 640 message)))
