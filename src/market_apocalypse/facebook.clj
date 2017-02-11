@@ -61,8 +61,8 @@
 
 (defn send-long-message [recipient-id message]
   (map (fn [part] send-api {:recipient {:id recipient-id}
-                            :message (text-message (str part))})
+                            :message (text-message (apply str part))})
        (if
-          (< (count message) MAX_LENGTH)
+          (<= (count message) MAX_LENGTH)
           [message]
           (partition MAX_LENGTH MAX_LENGTH nil message))))
