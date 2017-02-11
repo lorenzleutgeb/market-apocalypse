@@ -1,4 +1,4 @@
-(ns facebook-example.facebook
+(ns market-apocalypse.facebook
   (:gen-class)
   (:require [clojure.string :as s]
             [org.httpkit.client :as http]
