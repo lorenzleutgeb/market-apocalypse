@@ -22,7 +22,7 @@
         time-of-message (get-in payload [:timestamp])
         message-text (get-in payload [:message :text])]
     (cond
-      (s/includes? (s/lower-case message-text) "nothing to offer") (fb/send-long-message (random-poem))
+      (s/includes? (s/lower-case message-text) "nothing to offer") (fb/send-long-message sender-id (random-poem))
       (s/includes? (s/lower-case message-text) "help") (fb/send-message sender-id (fb/text-message "Hi there, happy to help :)"))
       (s/includes? (s/lower-case message-text) "image") (fb/send-message sender-id (fb/image-message "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/M101_hires_STScI-PRC2006-10a.jpg/1280px-M101_hires_STScI-PRC2006-10a.jpg"))
       ; If no rules apply echo the user's message-text input
